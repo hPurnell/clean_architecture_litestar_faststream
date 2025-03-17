@@ -18,13 +18,13 @@ class TestSecuredEndpoint:
         
         assert response.is_success
 
-    def test_failed_login(self, fixture_e2e_test_client: TestClient, fixture_invalid_credentials: dict):
-        response = fixture_e2e_test_client.post("/auth/login", json=fixture_invalid_credentials)
+    def test_failed_login(self, fixture_integration_test_client: TestClient, fixture_invalid_credentials: dict):
+        response = fixture_integration_test_client.post("/auth/login", json=fixture_invalid_credentials)
         assert not response.is_success
         
         response_json = response.json()
         assert "access_token" not in response_json
 
-    def test_access_secured_endpoint_without_login(self, fixture_e2e_test_client: TestClient):
-        response = fixture_e2e_test_client.get("/items")
+    def test_access_secured_endpoint_without_login(self, fixture_integration_test_client: TestClient):
+        response = fixture_integration_test_client.get("/items")
         assert not response.is_success
