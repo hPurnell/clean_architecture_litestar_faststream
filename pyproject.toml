@@ -1,0 +1,22 @@
+[tool.black]
+line-length = 88
+target-version = ['py39']
+
+[tool.isort]
+profile = "black"
+line-length = 88
+
+[tool.flake8]
+max-line-length = 88
+exclude = ["build", "dist", "migrations", "__pycache__"]
+
+[tool.pylint.MASTER]
+max-line-length = 88
+ignore = ["migrations"]
+
+[tool.pylint."MESSAGES CONTROL"]
+disable = ["C0114", "C0115", "C0116"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "strict"
+asyncio_default_fixture_loop_scope = "function"

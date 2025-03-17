@@ -1,0 +1,11 @@
+pytest
+pytest-asyncio
+sqlalchemy
+pydantic
+pydantic-settings
+litestar[standard]
+pyjwt[crypto]==2.10.1
+mysql
+aio-pika
+faststream
+injector
