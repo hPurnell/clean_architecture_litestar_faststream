@@ -83,11 +83,22 @@ docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4.0-man
 
     POST /items:
 
-        {"Name":"Example Item","Postcode":12345,"Title":"Sample Title","Users":["Example Item"],"StartDate":"2024-12-31T13:17:29"}
+        {
+        "ValueStr": "string",
+        "ValueInt": 0,
+        "ValueFloat": 0
+        }
 
     PATCH /items:
     
-        {"Id":"<newly created item id>","Name":"Example Item","Postcode":90210,"Title":"Sample Title","Users":["Example Item"],"StartDate":"2024-12-31T13:17:29"}
+        {
+        "Id": 8,
+        "ValueStr": "string",
+        "ValueInt": 0,
+        "ValueFloat": 0,
+        "CreatedDate": "2025-03-17T01:47:27.156348",
+        "ModifiedDate": "2025-03-17T01:47:27.156353"
+        }
 
 ## Tests
 Tests are located in the tests directory. To run the tests:
