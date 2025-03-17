@@ -1,4 +1,9 @@
 # Clean Architecture implementation on Litestar
+Python implementation of Robert C. Martin's Clean Architecture. 
+
+The project is structured with concentric rings where the code depedencies flow inwards towards the center (the business domain layer) from the outer layers. Components are loosely coupled, which benefits testing and the evolving needs of the platform.
+
+![Clean Architecture](https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg)
 
 ## Features
 - Web framework - Litestar.
@@ -16,6 +21,7 @@
 - Database / APIs
 - Service layer
 - REST transport layer
+
 
 ## Installation and running the server
 
@@ -43,6 +49,7 @@ Substitute {password}, and set the connection string in .env.
 
 ### Rabbit MQ
 Using: https://hub.docker.com/_/rabbitmq/
+
 1. 
 ```
 docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4.0-management
