@@ -3,9 +3,10 @@
 ## Features
 - Web framework - Litestar.
     - Transport layer case conversion, i.e PascalCase REST layer to snake_case internal naming.
-- Event streaming handled by FastSteam, supports Kafka, RabbitMQ, and Redis.
+- Event streaming handled by FastSteam, supports Kafka, RabbitMQ, and Redis. Pub / sub.
 - ORM - SQLalchemy
     - Low code approach to adding tables - create a new domain model, a new SQLalchemy table entity, and inherit from BaseRepository and AbstractRepository.
+- Unit of work design pattern.
 - Dependency Inversion - Dishka DI framework
     - Dependency injection for components, seperate assembly for the application and test case instances. Monkey patching for tests is unncessary.
 
@@ -41,6 +42,7 @@ docker run -d  -e MYSQL_ROOT_PASSWORD={password}   -p 3306:3306   mysql:latest  
 Substitute {password}, and set the connection string in .env.
 
 ### Rabbit MQ
+Using: https://hub.docker.com/_/rabbitmq/
 1. 
 ```
 docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4.0-management
