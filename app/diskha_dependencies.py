@@ -24,7 +24,8 @@ class AppProvider(Provider):
         return ItemCommandPublisher(broker)
 
 
-class UnitTestProvider(AppProvider):
+class UnitTestProvider(Provider):
+    broker = from_context(provides=FastStreamBroker, scope=Scope.APP)
 
     @provide(scope=Scope.REQUEST)
     async def user_repository(self) -> AbstractUserRepository:
@@ -38,7 +39,8 @@ class UnitTestProvider(AppProvider):
     async def item_command_publisher(self, broker: FastStreamBroker) -> AbstractItemCommandPublisher:
         return ItemCommandPublisher(broker)
 
-class IntegrationTestProvider(AppProvider):
+class IntegrationTestProvider(Provider):
+    broker = from_context(provides=FastStreamBroker, scope=Scope.APP)
 
     @provide(scope=Scope.REQUEST)
     async def user_repository(self) -> AbstractUserRepository:
