@@ -3,11 +3,9 @@ from time import sleep
 import pytest
 from litestar.testing import TestClient
 
-
 @pytest.mark.integration
 class TestItemDecoupledCtrlIntegration:
 
-    @pytest.mark.forked
     def test_post_item(
         self, fixture_integration_test_client_with_auth: TestClient, fixture_new_item: dict
     ):
@@ -23,7 +21,6 @@ class TestItemDecoupledCtrlIntegration:
         assert len(response_json) == 1  # Adjusted to match one item for this test case
         assert response_json[0]["Id"] is not None
 
-    @pytest.mark.forked
     def test_delete_item(
         self, fixture_integration_test_client_with_auth: TestClient, fixture_new_item: dict
     ):
@@ -31,7 +28,6 @@ class TestItemDecoupledCtrlIntegration:
             "/items_decoupled", json=fixture_new_item  # Pass the dictionary directly
         )
         assert response.is_success
-        sleep(1)  # Wait for the update to be processed
         
         response = fixture_integration_test_client_with_auth.get("/items")
         assert response.is_success
@@ -39,13 +35,11 @@ class TestItemDecoupledCtrlIntegration:
 
         response = fixture_integration_test_client_with_auth.delete(f"/items_decoupled/{item_id}")
         assert response.is_success
-        sleep(1)  # Wait for the update to be processed
 
         response = fixture_integration_test_client_with_auth.get("/items")
         assert response.is_success
         assert len(response.json()) == 0
 
-    @pytest.mark.forked
     def test_patch_item(
         self,
         fixture_integration_test_client_with_auth: TestClient,
@@ -56,7 +50,6 @@ class TestItemDecoupledCtrlIntegration:
             "/items_decoupled", json=fixture_new_item  # Pass the dictionary directly
         )
         assert response.is_success
-        sleep(1)  # Wait for the update to be processed
 
         response = fixture_integration_test_client_with_auth.get("/items")
         assert response.is_success
@@ -68,7 +61,6 @@ class TestItemDecoupledCtrlIntegration:
             "/items_decoupled", json=update_item  # Send the updated item as JSON
         )
         assert response.is_success
-        sleep(1)  # Wait for the update to be processed
 
         response = fixture_integration_test_client_with_auth.get("/items")
         item = response.json()[0]

@@ -11,7 +11,7 @@ from app.items.controllers import NewItemDTO, UpdateItemDTO
 logger = logging.getLogger(__name__)
 
 
-class ItemsCommandsDecoupled(Controller):
+class ItemsCommandsDecoupledCtrl(Controller):
     path = "/items_decoupled"
     tags = ["Items Commands Decoupled"]
 
