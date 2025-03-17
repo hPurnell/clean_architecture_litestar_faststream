@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 T = TypeVar('T')
 ID = TypeVar('ID', bound=int)
 
-class AbstractAsyncRepository(ABC, Generic[T, ID]):
+class AbstractRepository(ABC, Generic[T, ID]):
     @abstractmethod
     def create(self, obj: T) -> T: ...
 
