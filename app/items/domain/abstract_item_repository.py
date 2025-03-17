@@ -1,6 +1,6 @@
 from app.items.domain import Item
-from app.utils.abstract_repository import AbstractAsyncRepository
+from app.utils.abstract_repository import AbstractRepository
 
 
-class AbstractItemRepository(AbstractAsyncRepository[Item, int]):
+class AbstractItemRepository(AbstractRepository[Item, int]):
     pass
