@@ -34,8 +34,8 @@ async def update_item(item: Item, unit_of_work: FromDishka[AbstractUnitOfWork]) 
 @router.subscriber("delete_command")
 async def delete_item(item_id: int, unit_of_work: FromDishka[AbstractUnitOfWork]) -> None:
     with unit_of_work:
-        item: Item | None = unit_of_work.items.delete(item_id)
-        if not item:
+        success: bool = unit_of_work.items.delete(item_id)
+        if not success:
             logger.error(f"Unable to delete item: {item_id}")
             raise Exception(detail=f"Unable to delete item: {item_id}")
         unit_of_work.commit()
