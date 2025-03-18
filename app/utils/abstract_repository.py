@@ -2,7 +2,7 @@ from typing import Optional, TypeVar, Generic, List
 from abc import ABC, abstractmethod
 
 T = TypeVar('T')
-ID = TypeVar('ID', bound=int)
+ID = TypeVar('ID')
 
 class AbstractRepository(ABC, Generic[T, ID]):
     @abstractmethod
