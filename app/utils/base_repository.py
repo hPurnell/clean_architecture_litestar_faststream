@@ -38,19 +38,24 @@ class BaseRepository(Generic[TEntity, TDataclass]):
         return {field: getattr(dataclass_instance, field) for field in self.pk_fields}
 
     def _get_entity_by_pk(self, pk_values: Union[Any, dict]) -> Optional[TEntity]:
+
         if isinstance(pk_values, dict):
+            # Ensure all primary key fields are present in the input dictionary.
             missing_fields = [field for field in self.pk_fields if field not in pk_values]
             if missing_fields:
                 raise ValueError(f"Missing primary key fields: {missing_fields}")
-            pk_tuple = tuple(pk_values[field] for field in self.pk_fields)
-        elif isinstance(pk_values, tuple):
-            raise TypeError("Tuple input is not supported. Please provide either a single value or a dict of primary key fields.")
+            
+            # Create the dictionary directly, no need to convert it to a tuple
+            pk_dict = {field: pk_values[field] for field in self.pk_fields}
+        
         else:
+            # For a single value as primary key input
             if len(self.pk_fields) != 1:
                 raise ValueError(f"Expected composite key (dict with fields {self.pk_fields}), but got a single value.")
-            pk_tuple = (pk_values,)
+            pk_dict = {self.pk_fields[0]: pk_values}
 
-        return self.session.get(self.entity_class, pk_tuple[0] if len(pk_tuple) == 1 else pk_tuple)
+        # Use the named primary key dictionary for session.get
+        return self.session.get(self.entity_class, pk_dict)
 
     def create(self, dataclass_instance: TDataclass) -> TDataclass:
         entity = self.entity_class(**asdict(dataclass_instance))
