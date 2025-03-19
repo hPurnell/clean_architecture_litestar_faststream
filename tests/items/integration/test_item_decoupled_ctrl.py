@@ -5,7 +5,7 @@ from litestar.testing import TestClient
 from app.utils.lock_test import lock_test
 from app.items.db.fake_item_repository import FakeItemRepository
 
-
+@pytest.mark.separate
 @pytest.mark.integration
 class TestItemDecoupledCtrlIntegration:
     @pytest.fixture(autouse=True)

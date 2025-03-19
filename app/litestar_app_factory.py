@@ -8,7 +8,7 @@ from dishka.integrations import faststream as faststream_integration
 
 from app.auth.controllers.auth_ctrl import AuthController
 from app.items.controllers import ItemController, ItemsCommandsDecoupledCtrl
-from app.diskha_dependencies import AppProvider, UnitTestProvider, IntegrationTestProvider
+from app.dishka_dependencies import AppProvider, UnitTestProvider, IntegrationTestProvider
 from app.authentication_middleware import JWTAuthenticationMiddleware
 from app.faststream_app_factory import create_faststream_app, lifespan_broker, FastStreamBroker, FastStream
 

@@ -1,9 +1,9 @@
 import pytest
 from litestar.testing import TestClient
 
+@pytest.mark.separate
 @pytest.mark.integration
 class TestItemCtrlIntegration:
-
     @pytest.mark.forked
     def test_post_items_get_items(
         self, fixture_integration_test_client_with_auth: TestClient, fixture_new_item: dict
