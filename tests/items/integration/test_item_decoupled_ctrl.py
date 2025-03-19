@@ -1,11 +1,17 @@
-from time import sleep
-
+import os
 import pytest
 from litestar.testing import TestClient
 
+from app.utils.lock_test import lock_test
+from app.items.db.fake_item_repository import FakeItemRepository
+
+
 @pytest.mark.integration
 class TestItemDecoupledCtrlIntegration:
-
+    @pytest.fixture(autouse=True)
+    def lock(self, lock_test):
+        pass
+    
     def test_post_item(
         self, fixture_integration_test_client_with_auth: TestClient, fixture_new_item: dict
     ):
