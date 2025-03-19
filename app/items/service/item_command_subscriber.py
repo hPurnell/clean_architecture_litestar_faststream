@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 router = FastStreamRouter(prefix="item_service_")
 
 
-@router.subscriber("create_command")
+@router.on("create_command")
 async def create_item(item: Item, unit_of_work: FromDishka[AbstractUnitOfWork]) -> None:
     with unit_of_work:
         item: Item | None = unit_of_work.items.create(item)
@@ -20,7 +20,7 @@ async def create_item(item: Item, unit_of_work: FromDishka[AbstractUnitOfWork]) 
         logger.info(f"Item created: {item}")
 
 
-@router.subscriber("update_command")
+@router.on("update_command")
 async def update_item(item: Item, unit_of_work: FromDishka[AbstractUnitOfWork]) -> None:
     with unit_of_work:
         item: Item | None = unit_of_work.items.update(item)
@@ -31,7 +31,7 @@ async def update_item(item: Item, unit_of_work: FromDishka[AbstractUnitOfWork]) 
         logger.info(f"Item updated: {item}")
 
 
-@router.subscriber("delete_command")
+@router.on("delete_command")
 async def delete_item(item_id: int, unit_of_work: FromDishka[AbstractUnitOfWork]) -> None:
     with unit_of_work:
         success: bool = unit_of_work.items.delete(item_id)
