@@ -1,10 +1,16 @@
 import pytest
 from litestar.testing import TestClient
 
+from app.utils.lock_test import lock_test
+
 
 @pytest.mark.separate
 @pytest.mark.integration
 class TestItemCtrlIntegration:
+    @pytest.fixture(autouse=True)
+    def lock(self, lock_test):
+        pass
+    
     @pytest.mark.forked
     def test_post_items_get_items(
         self,
