@@ -20,7 +20,12 @@ class ItemEntity(Base):
     value_int = Column(Integer, nullable=True)
     value_float = Column(Float, nullable=True)
     created_date = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
-    modified_date = Column(DateTime, nullable=False, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+    modified_date = Column(
+        DateTime,
+        nullable=False,
+        default=datetime.datetime.utcnow,
+        onupdate=datetime.datetime.utcnow,
+    )
 
 
 class ItemRepository(BaseRepository[ItemEntity, Item], AbstractItemRepository):

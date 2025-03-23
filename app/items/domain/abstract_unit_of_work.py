@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from app.items.domain import AbstractItemRepository
 
+
 class AbstractUnitOfWork(ABC):
     @abstractmethod
     def __enter__(self): ...

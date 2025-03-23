@@ -19,7 +19,9 @@ class Token:
 
 def decode_jwt_token(encoded_token: str) -> Token:
     try:
-        payload = jwt.decode(jwt=encoded_token, key=config.JWT_SECRET, algorithms=[ALGORITHM])
+        payload = jwt.decode(
+            jwt=encoded_token, key=config.JWT_SECRET, algorithms=[ALGORITHM]
+        )
         return Token(**payload)
     except jwt.exceptions.InvalidTokenError as e:
         raise NotAuthorizedException("Invalid token") from e

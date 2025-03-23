@@ -18,7 +18,9 @@ def fixture_unit_test_client() -> Iterator[TestClient[Litestar]]:
 
 
 @pytest.fixture(scope="function")
-def fixture_unit_test_client_with_auth(fixture_valid_credentials: dict) -> Iterator[TestClient[Litestar]]:
+def fixture_unit_test_client_with_auth(
+    fixture_valid_credentials: dict,
+) -> Iterator[TestClient[Litestar]]:
     app = create_unit_test_app()
     with TestClient(app=app) as client:
         auth_response = client.post("/auth/login", json=fixture_valid_credentials)
@@ -35,7 +37,9 @@ def fixture_integration_test_client() -> Iterator[TestClient[Litestar]]:
 
 
 @pytest.fixture(scope="function")
-def fixture_integration_test_client_with_auth(fixture_valid_credentials: dict) -> Iterator[TestClient[Litestar]]:
+def fixture_integration_test_client_with_auth(
+    fixture_valid_credentials: dict,
+) -> Iterator[TestClient[Litestar]]:
     app = create_integration_test_app()
     with TestClient(app=app) as client:
         auth_response = client.post("/auth/login", json=fixture_valid_credentials)
@@ -58,11 +62,7 @@ def fixture_invalid_credentials():
 @pytest.fixture
 def fixture_new_item() -> dict:
     # Create a NewItem instance and return as a dictionary with PascalCase fields
-    item = {
-        "ValueStr": "Example String",
-        "ValueInt": 42,
-        "ValueFloat": 123.45
-    }
+    item = {"ValueStr": "Example String", "ValueInt": 42, "ValueFloat": 123.45}
     return item  # Return the dictionary directly
 
 
