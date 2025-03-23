@@ -7,13 +7,16 @@ from dishka.integrations.litestar import inject, FromDishka
 from app.auth.controllers import AuthRequest, AuthResponse
 from app.auth.domain import AbstractUserRepository, User, encode_jwt_token
 
+
 class AuthController(Controller):
-    tags=["Auth"]
-    exclude_from_auth=True
+    tags = ["Auth"]
+    exclude_from_auth = True
 
     @post(path="/auth/login", exclude_from_auth=True)
     @inject
-    async def login(self, data: AuthRequest, user_repository: FromDishka[AbstractUserRepository]) -> Response:
+    async def login(
+        self, data: AuthRequest, user_repository: FromDishka[AbstractUserRepository]
+    ) -> Response:
         username = data.username
         password = data.password
 

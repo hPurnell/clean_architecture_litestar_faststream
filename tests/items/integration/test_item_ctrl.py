@@ -1,12 +1,15 @@
 import pytest
 from litestar.testing import TestClient
 
+
 @pytest.mark.separate
 @pytest.mark.integration
 class TestItemCtrlIntegration:
     @pytest.mark.forked
     def test_post_items_get_items(
-        self, fixture_integration_test_client_with_auth: TestClient, fixture_new_item: dict
+        self,
+        fixture_integration_test_client_with_auth: TestClient,
+        fixture_new_item: dict,
     ):
         client = fixture_integration_test_client_with_auth
 
@@ -22,10 +25,13 @@ class TestItemCtrlIntegration:
 
     @pytest.mark.forked
     def test_post_item_get_item(
-        self, fixture_integration_test_client_with_auth: TestClient, fixture_new_item: dict
+        self,
+        fixture_integration_test_client_with_auth: TestClient,
+        fixture_new_item: dict,
     ):
         response = fixture_integration_test_client_with_auth.post(
-            "/items", json=fixture_new_item  # Pass the dictionary directly
+            "/items",
+            json=fixture_new_item,  # Pass the dictionary directly
         )
         assert response.is_success
 
@@ -45,10 +51,13 @@ class TestItemCtrlIntegration:
 
     @pytest.mark.forked
     def test_delete_item(
-        self, fixture_integration_test_client_with_auth: TestClient, fixture_new_item: dict
+        self,
+        fixture_integration_test_client_with_auth: TestClient,
+        fixture_new_item: dict,
     ):
         response = fixture_integration_test_client_with_auth.post(
-            "/items", json=fixture_new_item  # Pass the dictionary directly
+            "/items",
+            json=fixture_new_item,  # Pass the dictionary directly
         )
         assert response.is_success
 
@@ -64,7 +73,9 @@ class TestItemCtrlIntegration:
         assert len(response.json()) == 0
 
     @pytest.mark.forked
-    def test_get_item_not_found(self, fixture_integration_test_client_with_auth: TestClient):
+    def test_get_item_not_found(
+        self, fixture_integration_test_client_with_auth: TestClient
+    ):
         response = fixture_integration_test_client_with_auth.get("/items/999999")
         assert response.status_code == 404
 
@@ -76,7 +87,8 @@ class TestItemCtrlIntegration:
         fixture_update_item: dict,
     ):
         response = fixture_integration_test_client_with_auth.post(
-            "/items", json=fixture_new_item  # Pass the dictionary directly
+            "/items",
+            json=fixture_new_item,  # Pass the dictionary directly
         )
         assert response.is_success
 
@@ -87,7 +99,8 @@ class TestItemCtrlIntegration:
         update_item = fixture_update_item
         update_item["Id"] = item_id  # Modify the update item to include the ID
         response = fixture_integration_test_client_with_auth.patch(
-            "/items", json=update_item  # Send the updated item as JSON
+            "/items",
+            json=update_item,  # Send the updated item as JSON
         )
         assert response.is_success
 

@@ -107,6 +107,16 @@ docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4.0-man
         "ModifiedDate": "2025-03-17T01:47:27.156353"
         }
 
+## Linting
+1. Install linters.
+```
+pip install -r requirements-lint.in
+```
+2. Run linters.
+```
+pre-commit run --all-files
+```
+
 ## Tests
 Tests are located in the tests directory. To run the tests:
 

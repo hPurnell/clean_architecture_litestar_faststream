@@ -1,21 +1,18 @@
 [tool.black]
 line-length = 88
-target-version = ['py39']
+target-version = ['py311']
 
-[tool.isort]
-profile = "black"
+[tool.ruff]
 line-length = 88
+target-version = "py311"
+lint.select = ["E", "F", "I", "B"]  # E=pycodestyle, F=pyflakes, I=isort, B=bugbear
+lint.ignore = []
+exclude = ["migrations", "venv", ".venv", "__pycache__"]
 
-[tool.flake8]
-max-line-length = 88
-exclude = ["build", "dist", "migrations", "__pycache__"]
-
-[tool.pylint.MASTER]
-max-line-length = 88
-ignore = ["migrations"]
-
-[tool.pylint."MESSAGES CONTROL"]
-disable = ["C0114", "C0115", "C0116"]
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+strict = true
 
 [tool.pytest.ini_options]
 asyncio_mode = "strict"

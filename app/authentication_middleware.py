@@ -11,12 +11,13 @@ API_KEY_HEADER = "Authorization"
 
 
 class JWTAuthenticationMiddleware(AbstractAuthenticationMiddleware):
-    async def authenticate_request(self, connection: ASGIConnection) -> AuthenticationResult:
-
+    async def authenticate_request(
+        self, connection: ASGIConnection
+    ) -> AuthenticationResult:
         auth_header = connection.headers.get(API_KEY_HEADER)
         if not auth_header:
             raise NotAuthorizedException()
-        
+
         auth_header_split = auth_header.split(" ")
         if len(auth_header_split) != 2:
             raise NotAuthorizedException()

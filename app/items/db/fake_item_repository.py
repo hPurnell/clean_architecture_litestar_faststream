@@ -2,6 +2,7 @@ from app.items.domain import AbstractItemRepository
 from app.items.domain import Item
 from typing import Optional
 
+
 class FakeItemRepository(AbstractItemRepository):
     def __init__(self):
         self.items = {}  # In-memory storage for items

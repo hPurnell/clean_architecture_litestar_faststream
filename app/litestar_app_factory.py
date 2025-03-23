@@ -8,9 +8,18 @@ from dishka.integrations import faststream as faststream_integration
 
 from app.auth.controllers.auth_ctrl import AuthController
 from app.items.controllers import ItemController, ItemsCommandsDecoupledCtrl
-from app.dishka_dependencies import AppProvider, UnitTestProvider, IntegrationTestProvider
+from app.dishka_dependencies import (
+    AppProvider,
+    UnitTestProvider,
+    IntegrationTestProvider,
+)
 from app.authentication_middleware import JWTAuthenticationMiddleware
-from app.faststream_app_factory import create_faststream_app, lifespan_broker, FastStreamBroker, FastStream
+from app.faststream_app_factory import (
+    create_faststream_app,
+    lifespan_broker,
+    FastStreamBroker,
+    FastStream,
+)
 
 
 def create_app() -> Litestar:
@@ -41,16 +50,16 @@ def create_unit_test_app() -> Litestar:
         debug=True,
         route_handlers=get_route_handlers(),
         openapi_config=create_openapi_config(),
-        middleware=[
-            auth_mw
-        ],
+        middleware=[auth_mw],
         on_startup=[on_startup],
         on_shutdown=[on_shutdown],
         lifespan=[lifespan_broker],
     )
     faststream_app: FastStream = create_faststream_app()
     broker: FastStreamBroker = faststream_app.broker
-    container = make_async_container(UnitTestProvider(), context={FastStreamBroker: broker})
+    container = make_async_container(
+        UnitTestProvider(), context={FastStreamBroker: broker}
+    )
     app.state.broker = broker
     litestar_integration.setup_dishka(container, app)
     faststream_integration.setup_dishka(container, faststream_app, auto_inject=True)
@@ -63,29 +72,24 @@ def create_integration_test_app() -> Litestar:
         debug=True,
         route_handlers=get_route_handlers(),
         openapi_config=create_openapi_config(),
-        middleware=[
-            auth_mw
-        ],
+        middleware=[auth_mw],
         on_startup=[on_startup],
         on_shutdown=[on_shutdown],
         lifespan=[lifespan_broker],
     )
     faststream_app: FastStream = create_faststream_app()
     broker: FastStreamBroker = faststream_app.broker
-    container = make_async_container(IntegrationTestProvider(), context={FastStreamBroker: broker})
+    container = make_async_container(
+        IntegrationTestProvider(), context={FastStreamBroker: broker}
+    )
     app.state.broker = broker
     litestar_integration.setup_dishka(container, app)
     faststream_integration.setup_dishka(container, faststream_app, auto_inject=True)
     return app
 
 
-
 def get_route_handlers():
-    return [
-        AuthController
-        , ItemController
-        , ItemsCommandsDecoupledCtrl
-        ]
+    return [AuthController, ItemController, ItemsCommandsDecoupledCtrl]
 
 
 def create_openapi_config():
@@ -117,4 +121,3 @@ async def on_startup(app: Litestar):
 
 async def on_shutdown(app: Litestar):
     return
-

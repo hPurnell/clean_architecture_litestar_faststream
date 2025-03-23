@@ -7,7 +7,6 @@ from app.items.service import UnitOfWork, FakeUnitOfWork, ItemCommandPublisher
 from app.faststream_app_factory import FastStreamBroker
 
 
-
 class AppProvider(Provider):
     broker = from_context(provides=FastStreamBroker, scope=Scope.APP)
 
@@ -18,9 +17,11 @@ class AppProvider(Provider):
     @provide(scope=Scope.REQUEST)
     async def unit_of_work(self) -> AbstractUnitOfWork:
         return UnitOfWork()
-    
+
     @provide(scope=Scope.REQUEST)
-    async def item_command_publisher(self, broker: FastStreamBroker) -> AbstractItemCommandPublisher:
+    async def item_command_publisher(
+        self, broker: FastStreamBroker
+    ) -> AbstractItemCommandPublisher:
         return ItemCommandPublisher(broker)
 
 
@@ -34,10 +35,13 @@ class UnitTestProvider(Provider):
     @provide(scope=Scope.REQUEST)
     async def unit_of_work(self) -> AbstractUnitOfWork:
         return FakeUnitOfWork()
-    
+
     @provide(scope=Scope.REQUEST)
-    async def item_command_publisher(self, broker: FastStreamBroker) -> AbstractItemCommandPublisher:
+    async def item_command_publisher(
+        self, broker: FastStreamBroker
+    ) -> AbstractItemCommandPublisher:
         return ItemCommandPublisher(broker)
+
 
 class IntegrationTestProvider(Provider):
     broker = from_context(provides=FastStreamBroker, scope=Scope.APP)
@@ -49,7 +53,9 @@ class IntegrationTestProvider(Provider):
     @provide(scope=Scope.REQUEST)
     async def unit_of_work(self) -> AbstractUnitOfWork:
         return FakeUnitOfWork()
-    
+
     @provide(scope=Scope.REQUEST)
-    async def item_command_publisher(self, broker: FastStreamBroker) -> AbstractItemCommandPublisher:
+    async def item_command_publisher(
+        self, broker: FastStreamBroker
+    ) -> AbstractItemCommandPublisher:
         return ItemCommandPublisher(broker)

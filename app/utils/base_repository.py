@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session
 from sqlalchemy import select
 from sqlalchemy.inspection import inspect
 
-TEntity = TypeVar('TEntity')
-TDataclass = TypeVar('TDataclass')
+TEntity = TypeVar("TEntity")
+TDataclass = TypeVar("TDataclass")
 
 
 class BaseRepository(Generic[TEntity, TDataclass]):
@@ -15,7 +15,7 @@ class BaseRepository(Generic[TEntity, TDataclass]):
         session: Session,
         entity_class: Type[TEntity],
         dataclass_class: Type[TDataclass],
-        pk_fields: Optional[list[str]] = None
+        pk_fields: Optional[list[str]] = None,
     ):
         self.session = session
         self.entity_class = entity_class
@@ -31,27 +31,34 @@ class BaseRepository(Generic[TEntity, TDataclass]):
 
     def _map_to_dataclass(self, entity: TEntity) -> TDataclass:
         return self.dataclass_class(
-            **{key: value for key, value in entity.__dict__.items() if not key.startswith('_')}
+            **{
+                key: value
+                for key, value in entity.__dict__.items()
+                if not key.startswith("_")
+            }
         )
 
     def _get_pk_values(self, dataclass_instance: TDataclass) -> dict:
         return {field: getattr(dataclass_instance, field) for field in self.pk_fields}
 
     def _get_entity_by_pk(self, pk_values: Union[Any, dict]) -> Optional[TEntity]:
-
         if isinstance(pk_values, dict):
             # Ensure all primary key fields are present in the input dictionary.
-            missing_fields = [field for field in self.pk_fields if field not in pk_values]
+            missing_fields = [
+                field for field in self.pk_fields if field not in pk_values
+            ]
             if missing_fields:
                 raise ValueError(f"Missing primary key fields: {missing_fields}")
-            
+
             # Create the dictionary directly, no need to convert it to a tuple
             pk_dict = {field: pk_values[field] for field in self.pk_fields}
-        
+
         else:
             # For a single value as primary key input
             if len(self.pk_fields) != 1:
-                raise ValueError(f"Expected composite key (dict with fields {self.pk_fields}), but got a single value.")
+                raise ValueError(
+                    f"Expected composite key (dict with fields {self.pk_fields}), but got a single value."
+                )
             pk_dict = {self.pk_fields[0]: pk_values}
 
         # Use the named primary key dictionary for session.get
