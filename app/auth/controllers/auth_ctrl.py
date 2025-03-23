@@ -29,12 +29,6 @@ class AuthController(Controller):
         if not user.password == password:
             raise HTTPException(status_code=401, detail="Invalid username or password")
 
-        # Generate JWT token
-        payload = {
-            "sub": username,
-            "iat": datetime.datetime.now(datetime.UTC),
-            "exp": datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=1),
-        }
         token = encode_jwt_token(username)
 
         return Response(
