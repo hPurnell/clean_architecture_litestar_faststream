@@ -11,7 +11,6 @@ class TestItemCtrlIntegration:
     def lock(self, lock_test):
         pass
     
-    @pytest.mark.forked
     def test_post_items_get_items(
         self,
         fixture_integration_test_client_with_auth: TestClient,
@@ -29,7 +28,6 @@ class TestItemCtrlIntegration:
         assert len(response_json) == 1  # Adjusted to match one item for this test case
         assert response_json[0]["Id"] is not None
 
-    @pytest.mark.forked
     def test_post_item_get_item(
         self,
         fixture_integration_test_client_with_auth: TestClient,
@@ -55,7 +53,6 @@ class TestItemCtrlIntegration:
         assert item["ValueInt"] == fixture_new_item["ValueInt"]
         assert item["ValueFloat"] == fixture_new_item["ValueFloat"]
 
-    @pytest.mark.forked
     def test_delete_item(
         self,
         fixture_integration_test_client_with_auth: TestClient,
@@ -78,14 +75,12 @@ class TestItemCtrlIntegration:
         assert response.is_success
         assert len(response.json()) == 0
 
-    @pytest.mark.forked
     def test_get_item_not_found(
         self, fixture_integration_test_client_with_auth: TestClient
     ):
         response = fixture_integration_test_client_with_auth.get("/items/999999")
         assert response.status_code == 404
 
-    @pytest.mark.forked
     def test_patch_item(
         self,
         fixture_integration_test_client_with_auth: TestClient,
